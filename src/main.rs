@@ -30,7 +30,6 @@ fn main () {
     let mut ex: [f64; KELEMENTCOUNT] = [0.0f64; KELEMENTCOUNT];
     let mut hy: [f64; KELEMENTCOUNT] = [0.0f64; KELEMENTCOUNT];
 
-    let t0: f64 = 0.0;
     let kc: usize = KELEMENTCOUNT/2;
     let pulse_t0: f64 = 40.0;
     const SPREAD: f64 = 12.0;
@@ -53,7 +52,7 @@ fn main () {
             }
 
             // Put a Gaussian pulse in the middle.
-            let delta: f64 = pulse_t0 - t0;
+            let delta: f64 = pulse_t0 - tick;
             let pulse = (-0.5f64 * (delta/SPREAD).powf(2.0f64) ).exp();
             ex[kc] = pulse;
             println!("{0:<6} | {1:<040}", delta, ex[kc]);
