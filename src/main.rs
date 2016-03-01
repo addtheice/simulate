@@ -36,11 +36,13 @@ fn main () {
     const SPREAD: f64 = 12.0;
     let mut tick: f64 = 0.0;
 
-    println!("Number Of Steps: ");
+    print!("Number Of Steps: ");
+    let _ = io::stdout().flush();
     let mut input_buffer = String::new();
     let _ = io::stdin().read_line(&mut input_buffer);
     let mut number_of_steps = input_buffer.trim().parse::<i32>().unwrap();
-    println!("{}", number_of_steps);
+
+    println!("");
 
     while number_of_steps > 0 {
 
