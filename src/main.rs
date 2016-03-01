@@ -4,6 +4,23 @@ use std::io::Write;
 
 const KELEMENTCOUNT: usize = 200;
 
+/// Just a static string for the divider header for the
+/// delta / ex table header.
+static EXTABLEDIVIDER: &'static str = "-------------------------------------------------";
+
+/// Prints the delta | ex[kc] header with divider.
+/// This also prints a new line before th header
+/// inorder to give room between the previous
+/// inputs or headers.
+fn print_delta_ex_table_header() {
+    // print the delta | ex[kc] table header.
+    println!("");
+    println!("{0:<06} | {1:<040}", "Delta", "ex[kc]");
+
+    println!("{}", EXTABLEDIVIDER);
+}
+
+
 /// This is a mostly direct translation of the FD1D_1.1.C
 /// 1D FDTD simulation in free space program found at the
 /// end of chapter 1.
@@ -43,6 +60,7 @@ fn main () {
 
     while number_of_steps > 0 {
 
+        print_delta_ex_table_header();
         for _ in 1..number_of_steps + 1 {
             tick = tick + 1.0f64;
             // Main FDTD Loop
