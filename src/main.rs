@@ -42,8 +42,6 @@ fn main () {
     let _ = io::stdin().read_line(&mut input_buffer);
     let mut number_of_steps = input_buffer.trim().parse::<i32>().unwrap();
 
-    println!("");
-
     while number_of_steps > 0 {
 
         for _ in 1..number_of_steps + 1 {
@@ -58,7 +56,7 @@ fn main () {
             let delta: f64 = pulse_t0 - t0;
             let pulse = (-0.5f64 * (delta/SPREAD).powf(2.0f64) ).exp();
             ex[kc] = pulse;
-            println!("{0:>010} {1:>010}", delta, ex[kc]);
+            println!("{0:<6} | {1:<040}", delta, ex[kc]);
 
             // Calculate the Hy field.
             for k in 0..KELEMENTCOUNT - 1 {
@@ -70,27 +68,28 @@ fn main () {
         // At the end of the calculation, print out
         // the Ex and Hy fields.
         for k in 0..KELEMENTCOUNT -1 {
-            println!("{0:>03} {1:>010} {2:>010}", k, ex[k], hy[k]);
+            println!("{0:<03} | {1:<040} | {2:<040}", k, ex[k], hy[k]);
         }
 
         // Write the E field out to a file "Ex".
         let mut e_field_file = File::create("Ex.txt").unwrap();
         for k in 1..KELEMENTCOUNT {
-            writeln!(e_field_file, "{:<062}", ex[k]);
+            writeln!(e_field_file, "{:<040}", ex[k]);
         }
 
         // Write the H field out to a file "Hy".
         let mut h_field_file = File::create("Hy.txt").unwrap();
         for k in 1..KELEMENTCOUNT {
-            writeln!(h_field_file, "{:<062}", hy[k]);
+            writeln!(h_field_file, "{:<040}", hy[k]);
         }
 
-        println!("Tick count = {0:>010}", tick);
+        println!("Tick count = {0:<04}", tick);
 
-        println!("Number Of Steps: ");
+        print!("Number Of Steps: ");
+        let _ = io::stdout().flush();
         let mut input_buffer = String::new();
         let _ = io::stdin().read_line(&mut input_buffer);
-        number_of_steps = input_buffer.trim().parse::<i32>().unwrap();
-        println!("{}", number_of_steps);
+        let mut number_of_steps = input_buffer.trim().parse::<i32>().unwrap();
+
     }
 }
