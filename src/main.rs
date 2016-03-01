@@ -30,22 +30,19 @@ fn main () {
     let mut ex: [f64; KELEMENTCOUNT] = [0.0f64; KELEMENTCOUNT];
     let mut hy: [f64; KELEMENTCOUNT] = [0.0f64; KELEMENTCOUNT];
 
-    let mut number_of_steps: i32 = 1;
-
     let t0: f64 = 0.0;
-
     let kc: usize = KELEMENTCOUNT/2;
     let pulse_t0: f64 = 40.0;
     const SPREAD: f64 = 12.0;
     let mut tick: f64 = 0.0;
 
-    while number_of_steps > 0 {
+    println!("Number Of Steps: ");
+    let mut input_buffer = String::new();
+    let _ = io::stdin().read_line(&mut input_buffer);
+    let mut number_of_steps = input_buffer.trim().parse::<i32>().unwrap();
+    println!("{}", number_of_steps);
 
-        println!("Number Of Steps: ");
-        let mut input_buffer = String::new();
-        let _ = io::stdin().read_line(&mut input_buffer);
-        number_of_steps = input_buffer.trim().parse::<i32>().unwrap();
-        println!("{}", number_of_steps);
+    while number_of_steps > 0 {
 
         for _ in 1..number_of_steps + 1 {
             tick = tick + 1.0f64;
@@ -87,5 +84,11 @@ fn main () {
         }
 
         println!("Tick count = {0:>010}", tick);
+
+        println!("Number Of Steps: ");
+        let mut input_buffer = String::new();
+        let _ = io::stdin().read_line(&mut input_buffer);
+        number_of_steps = input_buffer.trim().parse::<i32>().unwrap();
+        println!("{}", number_of_steps);
     }
 }
