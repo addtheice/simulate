@@ -4,6 +4,18 @@ use std::io::Write;
 
 const KELEMENTCOUNT: usize = 200;
 
+// macro to put formatting for the delta_ex
+// table in one place.
+macro_rules! delta_ex_format {
+    () => ("{0:<6} | {1:<40}")
+}
+
+// macro to put formatting for the k_ex_hy
+// table in one place.
+macro_rules! k_ex_hy_format {
+    () => ("{0:<3} | {1:<40} | {2:<40}")
+}
+
 /// Macro for printing a nice table header based
 /// on the formatting used to produce the tables
 /// rows.
@@ -65,7 +77,7 @@ fn main () {
 
     while number_of_steps > 0 {
 
-        print_table_header!("{0:<6} | {1:<40}", "Delta", "Ex[kc]");
+        print_table_header!(delta_ex_format!(), "Delta", "Ex[kc]");
         for _ in 1..number_of_steps + 1 {
             tick = tick + 1.0f64;
             // Main FDTD Loop
@@ -78,7 +90,7 @@ fn main () {
             let delta: f64 = pulse_t0 - tick;
             let pulse = (-0.5f64 * (delta/SPREAD).powf(2.0f64) ).exp();
             ex[kc] = pulse;
-            println!("{0:<6} | {1:<40}", delta, ex[kc]);
+            println!(delta_ex_format!(), delta, ex[kc]);
 
             // Calculate the Hy field.
             for k in 0..KELEMENTCOUNT - 1 {
@@ -89,9 +101,9 @@ fn main () {
 
         // At the end of the calculation, print out
         // the Ex and Hy fields.
-        print_table_header!("{0:<3} | {1:<40} | {2:<40}", "k", "Ex[k]", "Hy[k]");
+        print_table_header!(k_ex_hy_format!(), "k", "Ex[k]", "Hy[k]");
         for k in 0..KELEMENTCOUNT -1 {
-            println!("{0:<3} | {1:<40} | {2:<40}", k, ex[k], hy[k]);
+            println!(k_ex_hy_format!(), k, ex[k], hy[k]);
         }
 
         // Write the E field out to a file "Ex".
