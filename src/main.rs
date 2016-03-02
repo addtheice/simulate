@@ -4,36 +4,26 @@ use std::io::Write;
 
 const KELEMENTCOUNT: usize = 200;
 
-/// Just a static string for the divider header for the
-/// delta / ex table header.
-static EXTABLEDIVIDER: &'static str = "-------------------------------------------------";
-
-/// Just a static string for the divider header for the
-/// K | Ex | Hy table header.
-static EXKXTABLEDIVIDER: &'static str = "---------------------------------------------";
-
-/// Prints the delta | ex[kc] header with divider.
+/// Macro for printing a nice table header based
+/// on the formatting used to produce the tables
+/// rows.
+///
 /// This also prints a new line before the header
-/// inorder to give room between the previous
+/// in order to give room between the previous
 /// inputs or headers.
-fn print_delta_ex_table_header() {
-    // print the delta | ex[kc] table header.
-    println!("");
-    println!("{0:<06} | {1:<040}", "Delta", "ex[kc]");
+macro_rules! print_table_header {
+    ($txt:expr) => {
+        println!("");
+        println!("{0}", $txt);
+        println!("{0}", std::iter::repeat("-").take($txt.len()).collect::<String>());
+    };
+    ($fmt:expr, $($arg:tt)*) => ({
+        let table_row = format!($fmt, $($arg)*).to_string();
 
-    println!("{}", EXTABLEDIVIDER);
-}
-
-/// Prints the k | Ex | Hy header with divider.
-/// This also prints a new line before the header
-/// inorder to give room between the previous
-/// inputs or headers.
-fn print_ex_hy_table_header() {
-    // print the k | ex[kc] | hy[kc] table header.
-    println!("");
-    println!("{0:<03} | {1:<040} | {2:<040}", "k", "Ex[k]", "Hy[k]");
-    print!("{}", EXKXTABLEDIVIDER);
-    println!("{}", EXKXTABLEDIVIDER);
+        println!("");
+        println!("{0}", table_row);
+        println!("{0}", std::iter::repeat("-").take(table_row.len()).collect::<String>());
+    });
 }
 
 /// This is a mostly direct translation of the FD1D_1.1.C
@@ -75,7 +65,7 @@ fn main () {
 
     while number_of_steps > 0 {
 
-        print_delta_ex_table_header();
+        print_table_header!("{0:<6} | {1:<40}", "Delta", "Ex[kc]");
         for _ in 1..number_of_steps + 1 {
             tick = tick + 1.0f64;
             // Main FDTD Loop
@@ -99,7 +89,7 @@ fn main () {
 
         // At the end of the calculation, print out
         // the Ex and Hy fields.
-        print_ex_hy_table_header();
+        print_table_header!("{0:<3} | {1:<40} | {2:<40}", "k", "Ex[k]", "Hy[k]");
         for k in 0..KELEMENTCOUNT -1 {
             println!("{0:<3} | {1:<40} | {2:<40}", k, ex[k], hy[k]);
         }
