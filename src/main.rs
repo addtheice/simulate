@@ -72,11 +72,12 @@ fn main () {
         // End of the Main FDTD Loop.
 
         // Produce the gnuplot chart of the Ex pulse.
+        let x_axis_label = format!("FDTD cells, T = {0}", tick);
         let mut figure = Figure::new();
         figure.axes2d()
-            .set_title("Figure 1.2", &[])
-            .set_x_label("FDTD cells", &[])
+            .set_x_label(&x_axis_label, &[])
             .set_y_label("Ex", &[])
+            .set_y_range(AutoOption::Fix(-1.125),AutoOption::Fix(1.125))
             .set_size(1.0, 0.50)
             .set_pos(0.0,0.5)
             .set_y_ticks(Some((Fix(1.0), 0)), &[Mirror(false)], &[])
@@ -85,9 +86,9 @@ fn main () {
 
         // Produce the gnuplot chart of the Hy pulse.
         figure.axes2d()
-            .set_title("Figure 1.2", &[])
-            .set_x_label("FDTD cells", &[])
+            .set_x_label(&x_axis_label, &[])
             .set_y_label("Hy", &[])
+            .set_y_range(AutoOption::Fix(-1.125),AutoOption::Fix(1.125))
             .set_size(1.0, 0.50)
             .set_y_ticks(Some((Fix(1.0), 0)), &[Mirror(false)], &[])
             .set_x_ticks(Some((Fix(20.0), 0)), &[Mirror(true)], &[])
