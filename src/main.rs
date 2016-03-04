@@ -1,42 +1,15 @@
+extern crate gnuplot;
+
 use std::fs::File;
 use std::io;
 use std::io::Write;
 
+#[macro_use]
+mod tables;
+
+use gnuplot::*;
+
 const KELEMENTCOUNT: usize = 200;
-
-// macro to put formatting for the delta_ex
-// table in one place.
-macro_rules! delta_ex_format {
-    () => ("{0:<6} | {1:<40}")
-}
-
-// macro to put formatting for the k_ex_hy
-// table in one place.
-macro_rules! k_ex_hy_format {
-    () => ("{0:<3} | {1:<40} | {2:<40}")
-}
-
-/// Macro for printing a nice table header based
-/// on the formatting used to produce the tables
-/// rows.
-///
-/// This also prints a new line before the header
-/// in order to give room between the previous
-/// inputs or headers.
-macro_rules! print_table_header {
-    ($txt:expr) => {
-        println!("");
-        println!("{0}", $txt);
-        println!("{0}", std::iter::repeat("-").take($txt.len()).collect::<String>());
-    };
-    ($fmt:expr, $($arg:tt)*) => ({
-        let table_row = format!($fmt, $($arg)*).to_string();
-
-        println!("");
-        println!("{0}", table_row);
-        println!("{0}", std::iter::repeat("-").take(table_row.len()).collect::<String>());
-    });
-}
 
 /// This is a mostly direct translation of the FD1D_1.1.C
 /// 1D FDTD simulation in free space program found at the
@@ -61,6 +34,7 @@ macro_rules! print_table_header {
 /// As new programs are added, this file will be moved
 /// into a sub folder.
 fn main () {
+
     let mut ex: [f64; KELEMENTCOUNT] = [0.0f64; KELEMENTCOUNT];
     let mut hy: [f64; KELEMENTCOUNT] = [0.0f64; KELEMENTCOUNT];
 
@@ -77,7 +51,6 @@ fn main () {
 
     while number_of_steps > 0 {
 
-        print_table_header!(delta_ex_format!(), "Delta", "Ex[kc]");
         for _ in 1..number_of_steps + 1 {
             tick = tick + 1.0f64;
             // Main FDTD Loop
@@ -90,7 +63,6 @@ fn main () {
             let delta: f64 = pulse_t0 - tick;
             let pulse = (-0.5f64 * (delta/SPREAD).powf(2.0f64) ).exp();
             ex[kc] = pulse;
-            println!(delta_ex_format!(), delta, ex[kc]);
 
             // Calculate the Hy field.
             for k in 0..KELEMENTCOUNT - 1 {
@@ -99,12 +71,25 @@ fn main () {
         }
         // End of the Main FDTD Loop.
 
-        // At the end of the calculation, print out
-        // the Ex and Hy fields.
-        print_table_header!(k_ex_hy_format!(), "k", "Ex[k]", "Hy[k]");
-        for k in 0..KELEMENTCOUNT -1 {
-            println!(k_ex_hy_format!(), k, ex[k], hy[k]);
-        }
+        // Produce the gnuplot chart of the Ex pulse.
+        let mut figure = Figure::new();
+        figure.axes2d()
+            .set_title("Figure 1.2", &[])
+            .set_x_label("FDTD cells", &[])
+            .set_y_label("Ex", &[])
+            .set_x_ticks(Some((Fix(20.0), 0)), &[Mirror(false)], &[])
+            .lines(0..200, ex.iter(), &[Color("black")]);
+        figure.show();
+
+        // Produce the gnuplot chart of the Hy pulse.
+        let mut figure = Figure::new();
+        figure.axes2d()
+            .set_title("Figure 1.2", &[])
+            .set_x_label("FDTD cells", &[])
+            .set_y_label("Hy", &[])
+            .set_x_ticks(Some((Fix(20.0), 0)), &[Mirror(false)], &[])
+            .lines(0..200, hy.iter(), &[Color("black")]);
+        figure.show();
 
         // Write the E field out to a file "Ex".
         let mut e_field_file = File::create("Ex.txt").unwrap();
