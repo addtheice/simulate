@@ -73,18 +73,6 @@ fn main () {
         // Produce the gnuplot chart of the Ex pulse.
         charts::chart_ex_hy(&ex,&hy, &tick);
 
-        // Write the E field out to a file "Ex".
-        let mut e_field_file = File::create("Ex.txt").unwrap();
-        for k in 1..KELEMENTCOUNT {
-            writeln!(e_field_file, "{:<40}", ex[k]);
-        }
-
-        // Write the H field out to a file "Hy".
-        let mut h_field_file = File::create("Hy.txt").unwrap();
-        for k in 1..KELEMENTCOUNT {
-            writeln!(h_field_file, "{:<40}", hy[k]);
-        }
-
         println!("Tick count = {0:<4}", tick);
 
         print!("Number Of Steps: ");
