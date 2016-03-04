@@ -1,6 +1,5 @@
 extern crate gnuplot;
 
-use std::fs::File;
 use std::io;
 use std::io::Write;
 
