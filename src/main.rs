@@ -32,13 +32,16 @@ const KELEMENTCOUNT: usize = 200;
 /// As new programs are added, this file will be moved
 /// into a sub folder.
 fn main () {
+    // Gaussian pulse information
+    const SPREAD: f64 = 12.0;
+    let kc: usize = KELEMENTCOUNT/2;
+    let pulse_t0: f64 = 40.0;
 
+    // FDTD space
     let mut ex: [f64; KELEMENTCOUNT] = [0.0f64; KELEMENTCOUNT];
     let mut hy: [f64; KELEMENTCOUNT] = [0.0f64; KELEMENTCOUNT];
 
-    let kc: usize = KELEMENTCOUNT/2;
-    let pulse_t0: f64 = 40.0;
-    const SPREAD: f64 = 12.0;
+    // Simulation time.
     let mut tick: f64 = 0.0;
 
     print!("Number Of Steps: ");
