@@ -6,8 +6,6 @@ use std::io::Write;
 mod electromagnetic_1d;
 use electromagnetic_1d::*;
 
-#[macro_use]
-mod tables;
 mod charts;
 
 const KELEMENTCOUNT: usize = 200;
@@ -20,14 +18,16 @@ const KELEMENTCOUNT: usize = 200;
 /// to rust, formatted it to follow rust styling, changed
 /// some of the variables to match a more 'rustonic'
 /// styling and removed any unused variables.
+/// Also I've converted the code to use a ElectroMagnetic1D
+/// structure and related processing code.
 ///
 /// Currently this program does not follow rust styling
 /// in regards to input validation and sanitization and
 /// skips all forms of error checking and modularity.
 ///
 /// This works as an example program, but in the future
-/// expanding to a real time graphing, expanded sizes,
-/// and GPU processing will occur in multiple dimensions.
+/// expanding to a real time graphing and GPU processing
+/// will occur in multiple dimensions.
 ///
 /// For now, this works as intended as an example as to
 /// the technique.
@@ -75,7 +75,7 @@ fn main () {
 
         // Produce the gnuplot chart of the Ex / Hy.
         charts::chart_ex_hy(&field, &tick);
-
+        
         println!("Tick count = {0:<4}", tick);
 
         print!("Number Of Steps: ");
