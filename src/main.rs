@@ -3,6 +3,9 @@ extern crate gnuplot;
 use std::io;
 use std::io::Write;
 
+mod electromagnetic_1d;
+use electromagnetic_1d::*;
+
 #[macro_use]
 mod tables;
 mod charts;
@@ -37,9 +40,7 @@ fn main () {
     let kc: usize = KELEMENTCOUNT/2;
     let pulse_t0: f64 = 40.0;
 
-    // FDTD space
-    let mut ex: [f64; KELEMENTCOUNT] = [0.0f64; KELEMENTCOUNT];
-    let mut hy: [f64; KELEMENTCOUNT] = [0.0f64; KELEMENTCOUNT];
+    let mut field: ElectroMagnetic1D = ElectroMagnetic1D::new(KELEMENTCOUNT);
 
     // Simulation time.
     let mut tick: f64 = 0.0;
@@ -56,24 +57,24 @@ fn main () {
             tick = tick + 1.0f64;
             // Main FDTD Loop
             // Calculate the Ex field.
-            for k in 1..KELEMENTCOUNT {
-                ex[k] = ex[k] + 0.5 * (hy[k-1] - hy[k]);
+            for k in 1..field.len() {
+                field.ex[k] = field.ex[k] + 0.5 * (field.hy[k-1] - field.hy[k]);
             }
 
             // Put a Gaussian pulse in the middle.
             let delta: f64 = pulse_t0 - tick;
             let pulse = (-0.5f64 * (delta/SPREAD).powf(2.0f64) ).exp();
-            ex[kc] = pulse;
+            field.ex[kc] = pulse;
 
             // Calculate the Hy field.
-            for k in 0..KELEMENTCOUNT - 1 {
-                hy[k] = hy[k] + 0.5f64 * (ex[k] - ex[k+1]);
+            for k in 0..field.len() - 1 {
+                field.hy[k] = field.hy[k] + 0.5f64 * (field.ex[k] - field.ex[k+1]);
             }
         }
         // End of the Main FDTD Loop.
 
         // Produce the gnuplot chart of the Ex pulse.
-        charts::chart_ex_hy(&ex,&hy, &tick);
+        charts::chart_ex_hy(&field.ex, &field.hy, &tick);
 
         println!("Tick count = {0:<4}", tick);
 
