@@ -73,8 +73,8 @@ fn main () {
         }
         // End of the Main FDTD Loop.
 
-        // Produce the gnuplot chart of the Ex pulse.
-        charts::chart_ex_hy(&field.ex, &field.hy, &tick);
+        // Produce the gnuplot chart of the Ex / Hy.
+        charts::chart_ex_hy(&field, &tick);
 
         println!("Tick count = {0:<4}", tick);
 
