@@ -63,7 +63,7 @@ fn main () {
 
             // Put a Gaussian pulse in the middle.
             let delta: f64 = pulse_t0 - tick;
-            let pulse = (-0.5f64 * (delta/SPREAD).powf(2.0f64) ).exp();
+            let pulse = (-0.5f64 * (delta / SPREAD).powi(2)).exp();
             field.ex[kc] = pulse;
 
             // Calculate the Hy field.
