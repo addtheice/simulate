@@ -10,8 +10,8 @@ pub fn chart_ex_hy(ex: &[f64], hy: &[f64], tick: &f64) {
         .set_size(1.0, 0.50)
         .set_pos(0.0,0.5)
         .set_y_ticks(Some((Fix(1.0), 0)), &[Mirror(false)], &[])
-        .set_x_ticks(Some((Fix(20.0), 0)), &[Mirror(true)], &[])
-        .lines(0..200, ex.iter(), &[Color("black")]);
+        .set_x_ticks(Some((Fix((ex.len() as f64)/10.0f64), 0)), &[Mirror(true)], &[])
+        .lines(0..ex.len(), ex.iter(), &[Color("black")]);
 
     // Produce the gnuplot chart of the Hy pulse.
     figure.axes2d()
@@ -20,7 +20,7 @@ pub fn chart_ex_hy(ex: &[f64], hy: &[f64], tick: &f64) {
         .set_y_range(AutoOption::Fix(-1.125),AutoOption::Fix(1.125))
         .set_size(1.0, 0.50)
         .set_y_ticks(Some((Fix(1.0), 0)), &[Mirror(false)], &[])
-        .set_x_ticks(Some((Fix(20.0), 0)), &[Mirror(true)], &[])
-        .lines(0..200, hy.iter(), &[Color("black")]);
+        .set_x_ticks(Some((Fix((hy.len() as f64)/10.0f64), 0)), &[Mirror(true)], &[])
+        .lines(0..hy.len(), hy.iter(), &[Color("black")]);
     figure.show();
 }
