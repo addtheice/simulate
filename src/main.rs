@@ -53,7 +53,7 @@ fn main () {
 
     while number_of_steps > 0 {
 
-        for _ in 1..number_of_steps + 1 {
+        for _ in 0..number_of_steps {
             tick = tick + 1.0f64;
             // Main FDTD Loop
             // Calculate the Ex field.
@@ -75,7 +75,7 @@ fn main () {
 
         // Produce the gnuplot chart of the Ex / Hy.
         charts::chart_ex_hy(&field, &tick);
-        
+
         println!("Tick count = {0:<4}", tick);
 
         print!("Number Of Steps: ");
