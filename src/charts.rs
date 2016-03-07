@@ -13,7 +13,8 @@ pub fn chart_ex_hy(field: &ElectroMagnetic1D, tick: &f64) {
         .set_pos(0.0,0.5)
         .set_y_ticks(Some((Fix(1.0), 0)), &[Mirror(false)], &[])
         .set_x_ticks(Some((Fix((field.len() as f64)/10.0f64), 0)), &[Mirror(true)], &[])
-        .lines(0..field.len(), field.ex.iter(), &[Color("black")]);
+        .lines(0..field.len(), field.ex.iter(), &[Color("black")])
+        .lines(0..field.len(), field.cb.iter(), &[Color("black"), LineStyle(Dash)]);
 
     // Produce the gnuplot chart of the Hy pulse.
     figure.axes2d()

@@ -58,7 +58,7 @@ fn main () {
             // Main FDTD Loop
             // Calculate the Ex field.
             for k in 1..field.len() {
-                field.ex[k] = field.ex[k] + 0.5 * (field.hy[k-1] - field.hy[k]);
+                field.ex[k] = field.ex[k] + field.cb[k] * (field.hy[k-1] - field.hy[k]);
             }
 
             // Put a Gaussian pulse in the middle.

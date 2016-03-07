@@ -1,12 +1,14 @@
 pub struct ElectroMagnetic1D {
     space_size: usize,
     pub ex: Vec<f64>,
-    pub hy: Vec<f64>
+    pub hy: Vec<f64>,
+    pub cb: Vec<f64>
 }
 
 impl ElectroMagnetic1D {
 
     /// Constructs a new, zero filled `ElectroMagnetic1D` with the specified size.
+    /// The dielectric constant for the field is set to 0.5 as a default.
     ///
     /// # Examples
     ///
@@ -20,7 +22,8 @@ impl ElectroMagnetic1D {
         ElectroMagnetic1D {
             space_size: size,
             ex: vec![0.0; size],
-            hy: vec![0.0; size]
+            hy: vec![0.0; size],
+            cb: vec![0.5; size]
         }
     }
 
