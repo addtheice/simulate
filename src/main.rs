@@ -56,10 +56,7 @@ fn main () {
         for _ in 0..number_of_steps {
             tick = tick + 1.0f64;
             // Main FDTD Loop
-            // Calculate the Ex field.
-            for k in 1..field.len() {
-                field.ex[k] = field.ex[k] + field.cb[k] * (field.hy[k-1] - field.hy[k]);
-            }
+            field.tick_ex();
 
             // Put a Gaussian pulse in the middle.
             let delta: f64 = pulse_t0 - tick;
@@ -67,9 +64,7 @@ fn main () {
             field.ex[kc] = pulse;
 
             // Calculate the Hy field.
-            for k in 0..field.len() - 1 {
-                field.hy[k] = field.hy[k] + 0.5f64 * (field.ex[k] - field.ex[k+1]);
-            }
+            field.tick_hy();
         }
         // End of the Main FDTD Loop.
 

@@ -2,7 +2,9 @@ pub struct ElectroMagnetic1D {
     space_size: usize,
     pub ex: Vec<f64>,
     pub hy: Vec<f64>,
-    pub cb: Vec<f64>
+    pub cb: Vec<f64>,
+    pub ex_low_m: [f64; 2],
+    pub ex_high_m: [f64; 2]
 }
 
 impl ElectroMagnetic1D {
@@ -23,7 +25,37 @@ impl ElectroMagnetic1D {
             space_size: size,
             ex: vec![0.0; size],
             hy: vec![0.0; size],
-            cb: vec![0.5; size]
+            cb: vec![0.5; size],
+            ex_low_m: [0.0; 2],
+            ex_high_m: [0.0; 2]
+        }
+    }
+
+    pub fn tick_ex(&mut self) {
+        // Calculate the Ex field.
+        for k in 1..self.space_size {
+            self.ex[k] = self.ex[k] + self.cb[k] * (self.hy[k-1] - self.hy[k]);
+        }
+        
+        /* Absorbing Boundary Conditions */
+        // Low Boundary Condition.
+        self.ex[0] = self.ex_low_m[1];
+        self.ex_low_m[1] = self.ex_low_m[0];
+        self.ex_low_m[0] = self.ex[1];
+
+        // High Boundary Condition.
+        self.ex[self.space_size-1] = self.ex_high_m[1];
+        self.ex_high_m[1] = self.ex_high_m[0];
+        self.ex_high_m[0] = self.ex[self.space_size - 2];
+    }
+
+    pub fn tick_hy(&mut self) {
+
+
+
+        // Calculate the Hy field.
+        for k in 0..self.len() - 1 {
+            self.hy[k] = self.hy[k] + 0.5f64 * (self.ex[k] - self.ex[k+1]);
         }
     }
 
