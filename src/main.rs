@@ -40,7 +40,7 @@ fn main () {
     let kc: usize = KELEMENTCOUNT/2;
     let pulse_t0: f64 = 40.0;
 
-    let mut field: ElectroMagnetic1D = ElectroMagnetic1D::new(KELEMENTCOUNT);
+    let mut field = ElectroMagnetic1D::new(KELEMENTCOUNT);
 
     // Simulation time.
     let mut tick: f64 = 0.0;
