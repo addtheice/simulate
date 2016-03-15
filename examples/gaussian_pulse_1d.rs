@@ -1,12 +1,10 @@
-extern crate gnuplot;
+extern crate simulate;
 
 use std::io;
 use std::io::Write;
 
-mod electromagnetic_1d;
-use electromagnetic_1d::*;
-
-mod charts;
+use simulate::electromagnetic_1d::*;
+use simulate::charts;
 
 const KELEMENTCOUNT: usize = 200;
 

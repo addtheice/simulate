@@ -1,4 +1,6 @@
-use gnuplot::*;
+extern crate gnuplot;
+
+use self::gnuplot::*;
 use electromagnetic_1d::*;
 
 
