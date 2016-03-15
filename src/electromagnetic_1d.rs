@@ -16,7 +16,9 @@ impl ElectroMagnetic1D {
     /// # Examples
     ///
     /// ```
-    /// let mut field = ElectroMagnetic1D::new(10);
+    /// use simulate::electromagnetic_1d::*;
+    ///
+    /// let field = ElectroMagnetic1D::new(10);
     ///
     /// // The field has 10 elements and they are all 0.
     /// assert_eq!(field.len(), 10);
@@ -64,6 +66,8 @@ impl ElectroMagnetic1D {
     /// # Examples
     ///
     /// ```
+    /// use simulate::electromagnetic_1d::*;
+    ///
     /// let field = ElectroMagnetic1D::new(3);
     /// assert_eq!(field.len(), 3);
     /// ```
