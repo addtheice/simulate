@@ -1,7 +1,8 @@
 # Simulate
 
 [![Build Status](https://travis-ci.org/addtheice/simulate.svg?branch=master)](https://travis-ci.org/addtheice/simulate) [![Clippy Linting Result](http://clippy.bashy.io/github/addtheice/simulate/master/badge.svg)](http://clippy.bashy.io/github/addtheice/simulate/master/log)
-
+ [![Join the chat at https://gitter.im/addtheice/simulate](https://badges.gitter.im/addtheice/simulate.svg)](https://gitter.im/addtheice/simulate?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+ 
 Basic rust based simulation library.
 
 Currently supporting:
