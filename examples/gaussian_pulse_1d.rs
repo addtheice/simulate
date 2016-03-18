@@ -8,17 +8,6 @@ use simulate::charts;
 
 const KELEMENTCOUNT: usize = 200;
 
-/// This is a mostly direct translation of the FD1D_1.1.C
-/// 1D FDTD simulation in free space program found at the
-/// end of chapter 1.
-///
-/// The major differences are that I've converted the code
-/// to rust, formatted it to follow rust styling, changed
-/// some of the variables to match a more 'rustonic'
-/// styling and removed any unused variables.
-/// Also I've converted the code to use a ElectroMagnetic1D
-/// structure and related processing code.
-///
 /// Currently this program does not follow rust styling
 /// in regards to input validation and sanitization and
 /// skips all forms of error checking and modularity.
@@ -29,9 +18,6 @@ const KELEMENTCOUNT: usize = 200;
 ///
 /// For now, this works as intended as an example as to
 /// the technique.
-///
-/// As new programs are added, this file will be moved
-/// into a sub folder.
 fn main () {
     // Gaussian pulse information
     const SPREAD: f64 = 12.0;
