@@ -1,0 +1,7 @@
+[package]
+name = "simulate"
+version = "0.1.0"
+authors = ["scriptandcomppile"]
+
+[dependencies]
+gnuplot = "0.0.20"
